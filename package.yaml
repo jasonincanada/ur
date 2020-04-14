@@ -1,0 +1,50 @@
+name:                ur
+version:             0.1.0.0
+github:              "jasonincanada/ur"
+license:             BSD3
+author:              "Jason Hooper"
+maintainer:          "nirgle@gmail.com"
+copyright:           "2020 Jason Hooper"
+
+extra-source-files:
+- README.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/ur#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- containers
+- hspec
+- mtl
+
+library:
+  source-dirs: src
+
+executables:
+  ur-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - ur
+
+tests:
+  ur-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - ur
