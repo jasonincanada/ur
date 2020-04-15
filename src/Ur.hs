@@ -72,8 +72,12 @@ pickUp ur@Ur{..} pos
   where
     middle   = pos `elem` [5..12]
     isYours  = pos `member` yours
-    noPiece  = pos `notMember` mine
-    board    = ur { mine = delete pos mine }
+    noPiece  = if pos == 0
+               then mineLeft == 0
+               else pos `notMember` mine
+    board    = if pos == 0
+               then ur { mineLeft = mineLeft - 1 }
+               else ur { mine = delete pos mine }
 
 
 placeDown :: Jump -> (Ur, Pos) -> Either Error Ur

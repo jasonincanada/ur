@@ -83,6 +83,13 @@ main = hspec $ do
                                "W-W-31--",
                                "W"])
 
+      it "moves a new piece onto the board" $ do
+        show (flip <$> tryMove board (Move 0 3))
+          `shouldBe` (unlines ["Right -B-B10-B",
+                               "BW-BB---",
+                               "WWW-20W-",
+                               "W"])
+
 
     context "misc" $ do
 
