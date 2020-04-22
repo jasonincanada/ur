@@ -14,24 +14,24 @@ import Ur
 
 -- the board at the start of every game, us to play first
 blank :: Ur
-blank  = Ur { mine      = empty
-            , yours     = empty
-            , mineLeft  = 7
-            , yoursLeft = 7
+blank  = Ur { mine      = empty                             --  ----70--
+            , yours     = empty                             --  --------
+            , mineLeft  = 7                                 --  ----70--
+            , yoursLeft = 7                                 --  W
             , me        = White }
 
 -- a snapshot from an average game, they have the rosette
-board  = Ur { mine      = fromList [2,4,6,14]
-            , yours     = fromList [1,3,5,8,9,13]
-            , mineLeft  = 3
-            , yoursLeft = 1
+board  = Ur { mine      = fromList [2,4,6,14]               --  -B-B10-B
+            , yours     = fromList [1,3,5,8,9,13]           --  BW-BB---
+            , mineLeft  = 3                                 --  W-W-30W-
+            , yoursLeft = 1                                 --  W
             , me        = White }
 
 -- both players are a 1-roll away from winning the game
-almost = Ur { mine      = fromList [14]
-            , yours     = fromList [14]
-            , mineLeft  = 0
-            , yoursLeft = 0
+almost = Ur { mine      = fromList [14]                     --  ----06B-
+            , yours     = fromList [14]                     --  --------
+            , mineLeft  = 0                                 --  ----06W-
+            , yoursLeft = 0                                 --  W
             , me        = White }
 
 
