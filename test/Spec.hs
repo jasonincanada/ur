@@ -3,21 +3,15 @@
 import Prelude hiding (flip)
 import Data.IntSet
 import Test.Hspec
+
 import Ur
+import Ur.Play
 
 
 main :: IO ()
 main = hspec $ do
 
   describe "boards" $ do
-
-    -- A common starting board for tests
-    let board    = Ur (fromList [2,4,6,14])
-                      (fromList [1,3,5,8,9,13])
-                      3
-                      1
-                      White
-
 
     let expected = unlines ["-B-B10-B",
                             "BW-BB---",
@@ -98,4 +92,8 @@ main = hspec $ do
                                                  "BW-BB---",
                                                  "-B-B10-B",
                                                  "B"])
+
+    context "moves" $ do
+      it "considers jump 0 to have no valid boards" $ do
+        (show $ moves board 0) `shouldBe` "[]"
 

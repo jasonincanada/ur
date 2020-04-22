@@ -39,13 +39,6 @@ data Ur = Ur { mine      :: IntSet    -- positions of pieces
              , me        :: Player
              }
 
-blank :: Ur
-blank = Ur { mine      = empty
-           , yours     = empty
-           , mineLeft  = 7
-           , yoursLeft = 7
-           , me        = White
-           }
 
 
 {- Game Logic -}
@@ -145,6 +138,31 @@ flip Ur{..} = Ur { mine      = yours
                  , me        = if me == White
                                then Black
                                else White }
+
+
+-- get all valid board positions reachable from here with this size jump
+moves :: Ur -> Jump -> [Ur]
+moves ur@Ur{..} jump
+  | jump == 0 = []
+  | otherwise = foldMap p tries
+  where
+    tries :: [Either Error Ur]
+    tries = [ tryMove ur (Move from jump) | from <- froms ]
+
+    froms = if mineLeft > 0
+            then 0 : toList mine
+            else     toList mine
+
+    p :: Either Error Ur -> [Ur]
+    p (Right ur) = [ur]
+    p (Left  _ ) = []
+
+
+winner :: Ur -> Maybe Player
+winner Ur{..}
+  | mineLeft  == 0 && mine  == empty = Just me
+  | yoursLeft == 0 && yours == empty = Just (if me == White then Black else White)
+  | otherwise                        = Nothing
 
 
 {- Views -}

@@ -23,6 +23,8 @@ dependencies:
 - containers
 - hspec
 - mtl
+- random
+- extra
 
 library:
   source-dirs: src
