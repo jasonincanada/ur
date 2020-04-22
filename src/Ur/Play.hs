@@ -93,7 +93,7 @@ tournament ur n strat _ = go n 0
     go :: Int -> Int -> IO ()
     go 0 wins = putStrLn $ printf "Won %d times" wins
     go n wins = do
-                  (ur', moves, winner) <- play strat ur
+                  (_, _, winner) <- play strat ur
                   
                   let wins' = case winner of
                                 White -> wins + 1
