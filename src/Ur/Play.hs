@@ -70,16 +70,17 @@ play strat ur = go 0 ur
     playTurn :: Ur -> Strategy -> IO Ur
     playTurn ur strat = roll >>= move
       where
+        -- sum up four random choices of {0,1}
+        roll :: IO Jump
+        roll = sum <$> replicateM 4 one
+          where
+            one = getStdRandom (randomR (0,1))
+
+        move :: Jump -> IO Ur
         move jump = case moves ur jump of
                       []     -> return $ flip ur
                       boards -> strat boards
 
-
-    -- sum up four random choices of {0,1}
-    roll :: IO Int
-    roll = sum <$> replicateM 4 one
-      where
-        one = getStdRandom (randomR (0,1))
 
 
 -- play a particular board to completion n times with a given strategy for
