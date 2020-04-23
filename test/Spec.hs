@@ -85,6 +85,20 @@ main = hspec $ do
                                "W"])
 
 
+    context "ur, ur2" $ do
+
+      it "should build a board with ur"  $ do
+        (show $ ur [2,4] [8,10]      ) `shouldBe` (unlines ["----05--",
+                                                            "---B-B--",
+                                                            "W-W-05--",
+                                                            "W"])
+      it "should build a board with ur2" $ do
+        (show $ ur2 [2,4] [8,10] 2 3 ) `shouldBe` (unlines ["----32--",
+                                                            "---B-B--",
+                                                            "W-W-23--",
+                                                            "W"])
+
+
     context "misc" $ do
 
       it "flip" $ do

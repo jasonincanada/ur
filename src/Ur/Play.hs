@@ -35,6 +35,24 @@ almost = Ur { mine      = fromList [14]                     --  ----06B-
             , me        = White }
 
 
+-- create a board with no pieces remaining other than the positions listed for
+-- us/them in the arguments
+ur :: [Pos] -> [Pos] -> Ur
+ur mine yours = Ur (fromList mine)
+                   (fromList yours)
+                   0 -- none waiting off board
+                   0
+                   White
+
+-- like ur, but also specify the number of pieces remaining off-board for each player
+ur2 :: [Pos] -> [Pos] -> Int -> Int -> Ur
+ur2 mine yours mineLeft yoursLeft = Ur (fromList mine)
+                                       (fromList yours)
+                                       mineLeft
+                                       yoursLeft
+                                       White
+
+
 {- Strategies -}
 
 -- when we have more than one possible move, a strategy picks its preferred one
