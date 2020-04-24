@@ -57,16 +57,21 @@ ur2 mine yours mineLeft yoursLeft = Ur (fromList mine)
 {- Simulation -}
 
 -- play a game to completion from a particular starting position, using the given
--- strategy for both players, reporting the final board, number of turns, and winner
-play :: Strategy -> Ur -> IO (Ur, Int, Player)
-play strat ur = go 0 ur
+-- strategies for the players, reporting the final board, number of turns, and winner
+play :: Strategy -> Strategy -> Ur -> IO (Ur, Int, Player)
+play strat1 strat2 start = go 0 start
   where
     go :: Int -> Ur -> IO (Ur, Int, Player)
     go turns ur = 
 
       case winner ur of
-        Nothing  -> playTurn ur strat >>= go (turns+1)
+        Nothing  -> playTurn ur strategy >>= go (turns+1)
         Just who -> return (ur, turns, who)
+
+      where
+        strategy = if me ur == me start
+                   then strat1
+                   else strat2
 
 
     playTurn :: Ur -> Strategy -> IO Ur
@@ -87,15 +92,13 @@ play strat ur = go 0 ur
 
 -- play a particular board to completion n times with a given strategy for
 -- each player, counting the number of games won by White
---
--- TODO: for now both sides play the same strategy
 tournament :: Ur -> Int -> Strategy -> Strategy -> IO ()
-tournament ur n strat _ = go n 0
+tournament ur n strat1 strat2 = go n 0
   where
     go :: Int -> Int -> IO ()
     go 0 wins = putStrLn $ printf "Won %d times" wins
     go n wins = do
-                  (_, _, winner) <- play strat ur
+                  (_, _, winner) <- play strat1 strat2 ur
                   
                   let wins' = case winner of
                                 White -> wins + 1
